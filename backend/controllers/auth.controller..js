@@ -4,7 +4,7 @@ const { generateToken } = require("../config/jwt")
 
 const register = async (req, res) => {
     try {
-        const { username, email, number, password, isAdmin } = req.body
+        const { firstName, lastName, email, phoneNumber, password, isDriver, isVerified } = req.body
         const user = await User.findOne({email})
 
         if(user){
@@ -13,7 +13,7 @@ const register = async (req, res) => {
         }
 
         const hashPass = await bcrypt.hash(password, 10)
-        const newUser = new User({username, email, number, password: hashPass, isAdmin})
+        const newUser = new User({firstName, lastName, email, phoneNumber, password: hashPass, isDriver, isVerified})
 
         await newUser.save()
         res.status(201).json({message: "User registered successfully!"})
@@ -30,14 +30,14 @@ const login = async (req, res) => {
         const user = await User.findOne({ email })
 
         if (!user) {
-            res.status(400).json({message: "Invalid credentials! (user not found)"})
+            res.status(400).json({message: "Invalid credentials! User not found."})
             return
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (!isMatch) {
-            res.status(400).json({message: "Invalid credentials! (wrong password)"})
+            res.status(400).json({message: "Invalid credentials! Wrong password."})
             return
         }
 
@@ -50,36 +50,4 @@ const login = async (req, res) => {
     }
 }
 
-const getMe = async (req, res) => {
-    res.json(req.user)
-}
-
-const updateUser = async (req, res)=>{
-    try {
-        const { confirmationPassword } = req.body
-
-        const user = await User.findOne({ _id: req.params.id })
-
-        if (!user) {
-            res.status(400).json({message: "User not found!"})
-        }
-
-        const isMatch = await bcrypt.compare(confirmationPassword, user.password)
-
-        if (!isMatch) {
-            res.status(400).json({message: "Wrong password!"})
-            return
-        }
-
-        const updatedUser = await User.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body},
-            { new: true, runValidators: true })
-        
-        res.status(200).json({message: "User updated successfully !", updatedUser})
-    } catch (error) {
-        res.status(500).json({error: error.message})
-    }
-}
-
-module.exports = { register, login, getMe, updateUser }
+module.exports = { register, login }
