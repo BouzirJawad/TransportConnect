@@ -4,46 +4,70 @@ const AnnouncementSchema = new mongoose.Schema({
   driver: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User', 
-    required: true 
+    required: [ true, "Driver id is required"] 
   },
   startPoint: { 
     type: String, 
-    required: true 
+    required: [ true, "Start point is required"],
+    trim: true
   },
   waypoints: [{ 
     type: String
   }],
   destination: { 
     type: String,
-    required: true
+    required: [ true, "Destination is required"],
+    trim: true
   },
   maxDimensions: {
-    length: Number,
-    width: Number,
-    height: Number
+    length: { type: Number, min: 0},
+    width: { type: Number, min: 0},
+    height: { type: Number, min: 0}
   },
   packageTypes: [{ 
-      type: String 
+      type: String,
+      trim: true,
+      lowercase: true
   }],
   availableCapacity: { 
     type: Number, 
-    required: true 
+    required: true,
+    min: 0
   },
   startDate: { 
     type: Date, 
-    required: true 
+    required: true,
+    validate: {
+      validator: function(value){
+        return value > new Date()
+      },
+      message: "Start date must be in the future"
+    }
   },
   endDate: { 
-    type: Date 
+    type: Date,
+    validate: function(value){
+      return !value || value > this.startDate
+    },
+    message: "End date must be after start date"
   },
   status: { 
     type: String, 
-    enum: ['pending', 'completed', 'cancelled'], 
+    enum: { 
+      values: ['pending', 'active', 'completed', 'cancelled'],
+      message: "status must be pending, active, completed or cancelled"
+    }, 
     default: 'pending' 
   },
+  // demands: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Demand",
+  //   }
+  // ],
   createdAt: { 
     type: Date, 
-    default: Date.now 
+    default: Date.now
   }
 });
 
