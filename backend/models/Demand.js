@@ -29,7 +29,9 @@ const DemandSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now 
     },
-    deliveredAt: Date
+    deliveredAt: {
+        type: Date
+    }
 });
 
 const demandModel = mongoose.model('Demand', DemandSchema)
