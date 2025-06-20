@@ -8,7 +8,8 @@ const DemandSchema = new mongoose.Schema({
     },
     announcement: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Announcement' 
+        ref: 'Announcement',
+        required: [ true, "Announce id is required"]
     },
     packages: [{
         title: String,

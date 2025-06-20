@@ -59,12 +59,6 @@ const AnnouncementSchema = new mongoose.Schema({
     }, 
     default: 'pending' 
   },
-  // demands: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Demand",
-  //   }
-  // ],
   createdAt: { 
     type: Date, 
     default: Date.now
