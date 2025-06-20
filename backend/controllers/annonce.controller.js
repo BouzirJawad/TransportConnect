@@ -7,7 +7,7 @@ const getAnnouncements = async (req, res) => {
         const announcements = await Annoncement.find()
         
         if (announcements.length === 0 ) {
-            return res.staus(404).json({ message: "No announcements to display"})
+            return res.staus(404).json({ error: "No announcements to display"})
         }
 
         res.status(201).json(announcements)
@@ -22,7 +22,7 @@ const getDriverAnnouncements = async (req, res) => {
         const announcements = await Annoncement.find({ driver: req.user._id }).sort({ createdAt: -1 })
         
         if (announcements.length === 0 ) {
-            return res.staus(404).json({ message: "No announcements to display"})
+            return res.staus(404).json({ error: "No announcements to display"})
         }
 
         res.status(201).json(announcements)
@@ -71,7 +71,6 @@ const createAnnoncement = async (req, res) => {
     });
 
     await announcement.save()
-    //await notifyDriver(announcement)
 
     res.status(201).json({ message: "Announcement created successfully!"})
   } catch (error) {
@@ -88,7 +87,7 @@ const updateAnnouncement = async (req, res) => {
         ).populate("driver")
 
         if (!updatedAnnouncement) {
-            return res.status(404).json({ message: "Announce not found"})
+            return res.status(404).json({ error: "Announce not found"})
         }
 
         res.status(201).json(updatedAnnouncement)
@@ -103,7 +102,7 @@ const deleteAnnouncement = async (req, res) => {
         const announcement = await Annoncement.findById({ _id: req.params.id, driver: req.user._id })
 
         if (!announcement) {
-            return res.status(404).json({ message: "Announcement not found" })
+            return res.status(404).json({ error: "Announcement not found" })
         }
 
         await Demand.updateMany(
