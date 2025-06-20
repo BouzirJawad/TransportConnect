@@ -9,7 +9,7 @@ const validateRegister = [
     .isEmail()
     .withMessage("Please enter a valid email")
     .normalizeEmail(),
-  body("number")
+  body("phoneNumber")
     .trim()
     .isLength({ min: 10, max: 10 })
     .withMessage("Phone number must be 10 numbers"),

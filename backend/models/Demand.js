@@ -1,4 +1,4 @@
-const mongoose = require('express')
+const mongoose = require('mongoose')
 
 const DemandSchema = new mongoose.Schema({
     shipper: { 

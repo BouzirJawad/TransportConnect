@@ -7,8 +7,8 @@ const {
   checkValidation,
 } = require("../middleware/validate.middleware");
 
-router.post("/auth/register", validateRegister, checkValidation, authController.register)
-router.post("/auth/login", validateLogin, checkValidation, authController.login)
+router.post("/register", validateRegister, checkValidation, authController.register)
+router.post("/login", validateLogin, checkValidation, authController.login)
 
 router.get("/test", (req, res) =>{
     res.send("hello world i'm testing my backend")

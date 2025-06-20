@@ -1,4 +1,3 @@
-const authMiddleware = require('./auth.middleware');
 
 const adminMiddleware = async (req, res, next) => {
   
