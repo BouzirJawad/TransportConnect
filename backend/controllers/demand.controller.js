@@ -1,5 +1,6 @@
 const Demand = require("../models/Demand")
 const Annoncement = require("../models/Announcement")
+const annonceModel = require("../models/Announcement")
 
 const getDemandsByAnnouncement = async (req, res) => {
     try {
@@ -159,18 +160,26 @@ const CancelDemand = async (req, res) => {
         await demand.save()
 
         if (demand.announcement) {
-            await Notification.create({
-            user: demand.announcement.driver,
-            title: 'Demand Cancelled',
-            message: `Demand #${demand._id.toString().slice(-6)} has been cancelled`,
-            type: 'demand',
-            relatedEntity: demand._id
-            });
+            demand.announcement.availableCapacity += totalVolume
+            await demand.announcement.save()
         }
 
-        res.status(201).json({ message: "Demand cancelled demand"})
+
+        // if (demand.announcement) {
+        //     await Notification.create({
+        //     user: demand.announcement.driver,
+        //     title: 'Demand Cancelled',
+        //     message: `Demand #${demand._id.toString().slice(-6)} has been cancelled`,
+        //     type: 'demand',
+        //     relatedEntity: demand._id
+        //     });
+        // }
+
+        res.status(201).json({ message: "Demand cancelled"})
 
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
 }
+
+module.exports = { getDemandsByAnnouncement, getDemand, getShipperDemands, createDemand, updateDemand, getShipperHistory, CancelDemand }
