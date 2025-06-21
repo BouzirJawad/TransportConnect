@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/auth.middleware')
 const driverMiddleware = require("../middleware/driver.middleware")
 const shipperMiddleware = require("../middleware/shipper.middleware")
 
-router.get("/byannouncement", authMiddleware, demandController.getDemandsByAnnouncement)
+router.get("/getbyannouncement", authMiddleware, demandController.getDemandsByAnnouncement)
 router.get("/getone", authMiddleware, demandController.getDemand)
 router.get("/getshipperdemands", authMiddleware, shipperMiddleware, demandController.getShipperDemands)
 router.post("/create", authMiddleware, shipperMiddleware, demandController.createDemand)

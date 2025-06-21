@@ -29,7 +29,7 @@ const AnnouncementSchema = new mongoose.Schema({
       trim: true,
       lowercase: true
   }],
-  availableCapacity: { 
+  availableCapacity: {
     type: Number, 
     required: true,
     min: 0

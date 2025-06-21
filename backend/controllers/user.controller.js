@@ -1,4 +1,5 @@
 const User = require("../models/User")
+const bcrypt = require("bcrypt")
 
 const getMe = async (req, res) => {
     res.json(req.user)

@@ -1,6 +1,5 @@
 const Demand = require("../models/Demand")
 const Annoncement = require("../models/Announcement")
-const annonceModel = require("../models/Announcement")
 
 const getDemandsByAnnouncement = async (req, res) => {
     try {
@@ -71,9 +70,9 @@ const createDemand = async (req, res) => {
             announcement: announcementId,
             packages
         })
-
+        
         await demand.save()
-
+        
         announcement.availableCapacity -= totalVolume
         await announcement.save()
 

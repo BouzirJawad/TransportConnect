@@ -124,7 +124,8 @@ const getDriverHistory = async (req, res) => {
             status: "completed"
         }).populate({ 
             path: "demands", 
-            match: { status: "delivered"}
+            match: { status: "delivered"},
+            strictPopulate: false
         }).sort({ endDate: -1})
 
         res.status(201).json(history)
