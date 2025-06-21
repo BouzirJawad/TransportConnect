@@ -68,7 +68,7 @@ const createDemand = async (req, res) => {
         const demand = new Demand({
             shipper: req.user._id,
             announcement: announcementId,
-            packages
+            packages: packages
         })
         
         await demand.save()
@@ -84,7 +84,7 @@ const createDemand = async (req, res) => {
         //     relatedEntity: demand._id
         // });
 
-        res.status(201).json(demand)
+        res.status(201).json({ message: "Demand created successfully"})
     } catch (error) {
         res.status(500).json({ error: error.message })
     }

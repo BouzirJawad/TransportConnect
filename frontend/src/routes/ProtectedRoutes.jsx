@@ -5,7 +5,7 @@ export const ProtectedRoute = () => {
     const { token, user } = useAuth()
 
     if(!token && !user ){
-        return <Navigate to={"/connect"}/>
+        return <Navigate to={"/home"}/>
     }
 
     return <Outlet />
