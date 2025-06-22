@@ -106,7 +106,7 @@ const ViewAnnouncement = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-sm">
             <p><strong>From:</strong> {announcement.startPoint}</p>
             <p><strong>To:</strong> {announcement.destination}</p>
-            <p><strong>Date:</strong> {new Date(announcement.startDate).toLocaleDateString()}</p>
+            <p><strong>Date:</strong> {new Date(announcement.startDate).toLocaleDateString('en-gb')}</p>
             <p><strong>Status:</strong> {announcement.status || "N/A"}</p>
             <p><strong>Capacity:</strong> {announcement.availableCapacity} kg</p>
             <p>
@@ -140,7 +140,7 @@ const ViewAnnouncement = () => {
         <div className="space-y-4">
           <h3 className="text-xl font-semibold">Related Demands</h3>
           {demands.length === 0 ? (
-            <p className="text-gray-500">No demands yet.</p>
+            <p className=" text-gray-500">No demands yet.</p>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2">
               {demands.map((demand) => (

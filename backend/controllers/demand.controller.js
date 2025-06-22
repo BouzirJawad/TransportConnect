@@ -16,6 +16,26 @@ const getDemandsByAnnouncement = async (req, res) => {
     }
 }
 
+const getPendingDemands = async (req, res) => {
+    try {
+        const demands = await Demand.find({status: "pending"}).populate({
+            path: "announcement",
+            populate: { path: ("driver", "_id")},
+        }).populate("shipper", "firstName lastName phoneNumber")
+
+        
+        const userDemands = demands.filter(demand => 
+            demand.announcement && 
+            demand.announcement.driver && 
+            demand.announcement.driver._id.toString() === req.user.id
+        );
+
+        res.status(201).json(userDemands)
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
 const getDemand = async (req, res) => {
     try {
         const demand = await Demand.findById(req.params.id)
@@ -76,14 +96,6 @@ const createDemand = async (req, res) => {
         announcement.availableCapacity -= totalVolume
         await announcement.save()
 
-        // await Notification.create({
-        //     user: announcement.driver,
-        //     title: 'New Shipping Demand',
-        //     message: `You have a new demand for your route to ${announcement.destination}`,
-        //     type: 'demand',
-        //     relatedEntity: demand._id
-        // });
-
         res.status(201).json({ message: "Demand created successfully"})
     } catch (error) {
         res.status(500).json({ error: error.message })
@@ -105,14 +117,6 @@ const updateDemand = async (req, res) => {
 
         res.status(201).json(updatedDemand)
 
-        //  // Notify shipper
-        // await Notification.create({
-        //     user: demand.shipper,
-        //     title: `Demand Status Updated`,
-        //     message: `Your demand status is now ${status}`,
-        //     type: 'demand',
-        //     relatedEntity: demand._id
-        // });
     } catch (error) {
         res.status(500).json({ error: error.message })
     }
@@ -163,17 +167,6 @@ const CancelDemand = async (req, res) => {
             await demand.announcement.save()
         }
 
-
-        // if (demand.announcement) {
-        //     await Notification.create({
-        //     user: demand.announcement.driver,
-        //     title: 'Demand Cancelled',
-        //     message: `Demand #${demand._id.toString().slice(-6)} has been cancelled`,
-        //     type: 'demand',
-        //     relatedEntity: demand._id
-        //     });
-        // }
-
         res.status(201).json({ message: "Demand cancelled"})
 
     } catch (error) {
@@ -181,4 +174,4 @@ const CancelDemand = async (req, res) => {
     }
 }
 
-module.exports = { getDemandsByAnnouncement, getDemand, getShipperDemands, createDemand, updateDemand, getShipperHistory, CancelDemand }
+module.exports = { getDemandsByAnnouncement, getPendingDemands, getDemand, getShipperDemands, createDemand, updateDemand, getShipperHistory, CancelDemand }

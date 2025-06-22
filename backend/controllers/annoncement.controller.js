@@ -27,7 +27,7 @@ const getDriverAnnouncements = async (req, res) => {
 
         res.status(201).json(announcements)
     } catch (error) {
-        res.status().json({ error: error.message })
+        res.status(500).json({ error: error.message })
     }
 }
 

@@ -63,12 +63,16 @@ const CreateAnnouncementModal = ({ onClose }) => {
         };
         await axios.post(
           "http://localhost:7460/api/announcements/create",
-          payload,{
-            headers: {Authorization: `Bearer ${token}`}
+          payload,
+          {
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-        toast.success("Announcement created successfully!");
+        toast.success("Announcement created successfully!", {duration: 2000});
         onClose();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2200);
       } catch (error) {
         toast.error(
           error.response?.data?.message || "Failed to create announcement"
@@ -284,12 +288,11 @@ const CreateAnnouncementModal = ({ onClose }) => {
               onChange={formik.handleChange}
               className="w-full border border-gray-300 p-2 rounded-lg"
             />
-            {formik.errors.startDate &&
-                  formik.touched.startDate && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {formik.errors.startDate}
-                    </p>
-                  )}
+            {formik.errors.startDate && formik.touched.startDate && (
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.startDate}
+              </p>
+            )}
           </div>
 
           <div className="text-right">

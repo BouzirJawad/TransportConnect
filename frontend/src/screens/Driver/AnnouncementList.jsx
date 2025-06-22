@@ -32,7 +32,7 @@ const AnnouncementsList = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
 
   return (
-    <div className="p-4 space-y-6 h-150 overflow-y-scroll">
+    <div className={ announcements.length < 3 ? "p-4 space-y-6" : "p-4 space-y-6 h-150 overflow-y-scroll"}>
       {announcements.length === 0 ? (
         <p className="text-center text-gray-500">No announcements found.</p>
       ) : (
@@ -41,7 +41,7 @@ const AnnouncementsList = () => {
             <h3 className="text-lg font-bold mb-2">
               {ann.startPoint} ➜ {ann.destination}
             </h3>
-            <p><span className="font-semibold">Start Date:</span> {new Date(ann.startDate).toLocaleDateString()}</p>
+            <p><span className="font-semibold">Start Date:</span> {new Date(ann.startDate).toLocaleDateString('en-gb')}</p>
             <p><span className="font-semibold">Capacity:</span> {ann.availableCapacity} kg</p>
             <p>
               <span className="font-semibold">Package Types:</span>{" "}
