@@ -11,7 +11,7 @@ const AnnouncementSchema = new mongoose.Schema({
     required: [ true, "Start point is required"],
     trim: true
   },
-  waypoints: [{ 
+  wayPoints: [{ 
     type: String
   }],
   destination: { 
@@ -24,7 +24,7 @@ const AnnouncementSchema = new mongoose.Schema({
     width: { type: Number, min: 0},
     height: { type: Number, min: 0}
   },
-  packageTypes: [{ 
+  packagesTypes: [{ 
       type: String,
       trim: true,
       lowercase: true

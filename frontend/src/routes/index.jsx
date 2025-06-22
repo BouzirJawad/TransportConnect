@@ -7,6 +7,9 @@ import { ShipperRoutes } from "./ShipperRoutes";
 
 import LoginRegisterWrapper from "../screens/Auth/LoginRegisterWrapper";
 import Landing from "../screens/Public/Landing";
+import ProfilePage from "../screens/Profile/ProfilePage";
+import DriverDashboard from "../screens/Driver/DriverDashboard";
+import ViewAnnouncement from "../screens/Driver/ViewAnnouncement";
 
 const Routes = () => {
   const { token, user } = useAuth();
@@ -32,8 +35,8 @@ const Routes = () => {
       element: <ProtectedRoute />,
       children: [
         {
-          path: "profile",
-          element: <div>User Profile</div>,
+          path: "/profile",
+          element: <ProfilePage />,
         },
       ],
     },
@@ -85,28 +88,12 @@ const Routes = () => {
     children: [
       {
         path: "dashboard",
-        element: <div>Driver Dashboard</div>, // Replace with <DriverDashboard />
+        element: <DriverDashboard />,
       },
       {
-        path: "create-announcement",
-        element: <div>Create Announcement</div>,
-      },
-      {
-        path: "edit-announcement/:id",
-        element: <div>Edit Announcement</div>,
-      },
-      {
-        path: "my-announcements",
-        element: <div>My Announcements</div>,
-      },
-      {
-        path: "demands",
-        element: <div>Incoming Demands</div>,
-      },
-      {
-        path: "history",
-        element: <div>Driver History</div>,
-      },
+        path: "announcement/:id",
+        element: <ViewAnnouncement />
+      }
     ],
   };
 
@@ -137,8 +124,8 @@ const Routes = () => {
     ...routesForPublic,
     ...(token ? authOnly : []),
     ...(!token ? noAuthOnly : []),
-    ...(user?.isAdmin ? adminOnly : []),
-    ...(user?.isDriver ? driverOnly : []),
+    ...(user?.isAdmin ? [adminOnly] : []),
+    ...(user?.isDriver ? [driverOnly] : []),
     ...(user && !user?.isDriver ? shipperOnly : [])
   ]);
 

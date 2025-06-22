@@ -3,9 +3,11 @@ import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { registerSchema } from "../schemas/RegisterSchema";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
   const [serverError, setServerError] = useState("");
+  const navigate = useNavigate()
 
   const initialValues = {
     firstName: "",
@@ -26,8 +28,9 @@ const RegisterForm = () => {
         isVerified: false,
       };
       await axios.post("http://localhost:7460/api/auth/register", payload);
+
       toast.success("Account created successfully", { duration: 2000 });
-      switchToLogin();
+      props.whenDoneRegister()
     } catch (error) {
       setServerError(error.response?.data?.message || "Registration failed");
     } finally {

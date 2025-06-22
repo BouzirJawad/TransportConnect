@@ -26,7 +26,7 @@ const LoginForm = () => {
         if (newToken) {
           toast.success("Login successful !", { duration: 2000 });
           login(newToken);
-          navigate("/");
+          navigate("/profile");
         }
       } catch (err) {
         toast.error(err?.response?.data?.message || "Login failed", { duration: 2000 });

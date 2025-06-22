@@ -13,7 +13,7 @@ const LoginRegisterWrapper = () => {
           {isLogin ? "Welcome Back" : "Create an Account"}
         </h2>
 
-        {isLogin ? <LoginForm /> : <RegisterForm />}
+        {isLogin ? <LoginForm /> : <RegisterForm whenDoneRegister={()=> setIsLogin(true)} />}
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">

@@ -1,83 +1,80 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../provider/AuthProvider";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "Service", href: "#service" },
-    { name: "About Us", href: "#about" },
-    { name: "Login", href: "/login" },
-    { name: "Register", href: "/register" },
-  ];
+  const { user, logout } = useAuth();
 
   return (
     <header className="bg-orange-1 shadow-md sticky top-0 z-50">
       <nav className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
-        <a href="/" className="text-orange-1 font-bold text-xl">
-          ShipMate
-        </a>
+        <Link to="/" className="text-white font-bold text-xl">
+          TransportConnect
+        </Link>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-6 items-center">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              {link.href.startsWith("#") ? (
-                <a
-                  href={link.href}
-                  className="text-blue-1 hover:text-orange-1 transition"
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <Link
-                  to={link.href}
-                  className="text-blue-1 hover:text-orange-1 transition"
-                >
-                  {link.name}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-6">
+          {user ? (
+            <>
+              <Link to={"/profile"} className="flex items-center gap-2 text-white">
+                <FaUserCircle className="text-2xl" />
+                <span>{user.firstName}</span>
+              </Link>
+              <button
+                onClick={logout}
+                className="bg-white text-orange-1 font-semibold px-4 py-1 rounded hover:bg-orange-2 transition"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/login">
+              <button className="text-orange-1 bg-white p- font-semibold transition">Login</button>
+            </Link>
+          )}
+        </div>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile */}
         <button
-          className="md:hidden text-blue-1 text-2xl"
+          className="md:hidden text-white text-2xl"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FaTimes /> : <FaBars />}
         </button>
       </nav>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile */}
       {isOpen && (
-        <ul className="md:hidden flex flex-col gap-4 px-6 pb-4 bg-gray-100">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              {link.href.startsWith("#") ? (
-                <a
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-blue-1 hover:text-orange-1 transition"
-                >
-                  {link.name}
-                </a>
-              ) : (
-                <Link
-                  to={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-blue-1 hover:text-orange-1 transition"
-                >
-                  {link.name}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div className="md:hidden flex flex-col gap-4 px-6 pb-4 bg-gray-100">
+          {user ? (
+            <>
+              <div className="flex items-center gap-2 text-blue-1">
+                <FaUserCircle className="text-xl" />
+                <span>{user.firstName}</span>
+              </div>
+              <button
+                onClick={() => {
+                  logout();
+                  setIsOpen(false);
+                }}
+                className="bg-orange-1 text-white font-semibold px-4 py-1 rounded hover:bg-orange-2 transition w-fit"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setIsOpen(false)}
+              className="text-blue-1 font-semibold hover:text-orange-1 transition"
+            >
+              Login
+            </Link>
+          )}
+        </div>
       )}
     </header>
   );

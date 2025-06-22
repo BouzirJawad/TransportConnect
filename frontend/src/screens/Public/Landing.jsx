@@ -1,21 +1,10 @@
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
 
 const Landing = () => {
   return (
     <div className="min-h-screen bg-eggshell text-blue-1 flex flex-col">
-      {/* Navbar */}
-      {/* <header className="flex justify-between items-center p-6 bg-orange-1 text-white shadow-md">
-        <h1 className="text-2xl font-bold">TransportConnect</h1>
-        <nav className="space-x-6">
-          <a href="#about" className="hover:underline">About</a>
-          <a href="#services" className="hover:underline">Services</a>
-          <a href="#contact" className="hover:underline">Contact</a>
-          <Link to="/login" className="bg-blue-2 px-4 py-2 rounded-md hover:bg-blue-1 transition">
-            Login
-          </Link>
-        </nav>
-      </header> */}
 
       <Navbar />
 
@@ -65,10 +54,7 @@ const Landing = () => {
         <p>Phone: +212 6 12 34 56 78</p>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-blue-2 text-white text-center p-4">
-        © {new Date().getFullYear()} TransportConnect. All rights reserved.
-      </footer>
+        <Footer />
     </div>
   );
 };

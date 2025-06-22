@@ -3,12 +3,12 @@ const Annoncement = require("../models/Announcement")
 
 const getDemandsByAnnouncement = async (req, res) => {
     try {
-        const { announcementId } = req.body
-        const demands = await Demand.find({ announcement: announcementId})
+        const announcementId  = req.params.id
 
-        if (!demands) {
-            return res.status(404).json({ error: "No demands to display"})
+        if (!announcementId) {
+            return res.status(400).json({ error: "Announcement ID is required" });
         }
+        const demands = await Demand.find({ announcement: announcementId, status:{ $ne: "pending" }}).populate('shipper', 'firstName lastName  email')
 
         res.status(201).json(demands)
     } catch (error) {
