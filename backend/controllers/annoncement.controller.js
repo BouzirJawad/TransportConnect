@@ -19,7 +19,7 @@ const getAnnouncements = async (req, res) => {
 //all for driver
 const getDriverAnnouncements = async (req, res) => {
     try {
-        const announcements = await Annoncement.find({ driver: req.user._id }).sort({ createdAt: -1 })
+        const announcements = await Annoncement.find({ driver: req.user._id, status: { $ne: "completed"} }).sort({ createdAt: -1 })
         
         if (announcements.length === 0 ) {
             return res.staus(404).json({ error: "No announcements to display"})

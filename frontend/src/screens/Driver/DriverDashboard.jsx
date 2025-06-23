@@ -4,7 +4,7 @@ import AnnouncementList from "./AnnouncementList";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import IncomingDemandsList from "./IncomingDemandsList";
-//import DriverHistory from "./DriverHistory";
+import DriverHistory from "./DriverHistory";
 
 const DriverDashboard = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -41,7 +41,7 @@ const DriverDashboard = () => {
         {/* History Section */}
         <section id="history">
           <h2 className="text-xl font-semibold mb-4">History</h2>
-          {/* <DriverHistory /> */}
+          <DriverHistory />
         </section>
       </main>
 

@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../provider/AuthProvider";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate()
 
   return (
     <header className="bg-orange-1 shadow-md sticky top-0 z-50">
@@ -58,6 +60,7 @@ const Navbar = () => {
               <button
                 onClick={() => {
                   logout();
+                  navigate("/")
                   setIsOpen(false);
                 }}
                 className="bg-orange-1 text-white font-semibold px-4 py-1 rounded hover:bg-orange-2 transition w-fit"

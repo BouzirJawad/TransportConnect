@@ -6,7 +6,14 @@ import axios from "axios";
 import { useAuth } from "../../provider/AuthProvider";
 import toast from "react-hot-toast";
 
-const CITIES = ["Casablanca", "Rabat", "Fes", "Marrakech", "Agadir"];
+const CITIES = [
+  "Casablanca", "Rabat", "Fes", "Marrakech", "Agadir",
+  "Tangier", "Meknes", "Oujda", "Kenitra", "Tetouan",
+  "Safi", "El Jadida", "Beni Mellal", "Nador", "Taza",
+  "Khouribga", "Mohammedia", "Laayoune", "Dakhla", "Essaouira",
+  "Taroudant", "Ouarzazate", "Guelmim", "Berrechid", "Settat",
+  "Tiznit", "Al Hoceima", "Errachidia", "Ifrane", "Midelt"
+]
 const PACKAGE_OPTIONS = ["fragile", "perishable", "liquid", "heavy"];
 
 const CreateAnnouncementModal = ({ onClose }) => {
